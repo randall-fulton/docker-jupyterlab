@@ -5,6 +5,8 @@ RUN yum update -y \
 
 RUN yum install -y \
         sudo \
+        vim-enhanced git \
+        file \
         gcc gcc-c++ \
         python34 python34-devel python34-pip \
     && yum clean all 

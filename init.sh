@@ -12,6 +12,7 @@ mkdir -p /jupyter
 chown -R $USER:$USER /jupyter
 echo ${USER}:${PASSWORD} | chpasswd
 
+cd $HOME
 su -m $USER && echo $PASSWORD | sudo -S -u $USER ${1:-/script.sh}
 # if [[ "$#" == 0 ]]; then
     # su -m $USER && echo $PASSWORD | sudo -S -u $USER /script.sh
