@@ -1,0 +1,1 @@
+docker run -d -p 8888:8888 -v /Users/randallfulton/Documents/python/notebooks:/jupyter -v /Users/randallfulton/git/axiom:/src --network="axiom_default" --name jupyterlab jupyterlab
