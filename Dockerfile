@@ -1,8 +1,23 @@
-FROM dclong/python
+FROM python:3.6-slim
 
-RUN apt-get update \
+ENV DBHOST=database DBPORT=5432 DBUSER=postgres DBNAME=postgres DBPASS=
+
+COPY requirements.txt requirements.txt
+
+RUN mkdir -p /usr/share/man/man7 \
+    && mkdir -p /usr/share/postgresql/9.4/man/man1 \
+    && mkdir -p /usr/share/man/man1 \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
         nodejs npm \
+        apt-transport-https \
+        build-essential \
+        curl \
+        libssl-dev \
+        libffi-dev \
+        postgresql-client \
+        openssh-server \
+        openssh-client \
     && ln -s /usr/bin/nodejs /usr/bin/node
 
 ARG nver=9.2.1
@@ -15,6 +30,7 @@ RUN pip3 install \
         jupyterlab nbdime \
         ipywidgets jupyterlab-widgets \
         qgrid \
+    && pip3 install -r requirements.txt \
         # plotly jupyterlab_plotly \
     # && jupyter labextension install --sys-prefix --py --symlink jupyterlab_plotly \
     # && jupyter labextension enable --sys-prefix --py jupyterlab_plotly \
@@ -28,6 +44,8 @@ COPY scripts /scripts
 COPY settings /settings
 # ADD jupyter_notebook_config.py /root/.jupyter/
 
+VOLUME /src
+
 EXPOSE 8888
 
-ENTRYPOINT ["/scripts/init.sh"]
+ENTRYPOINT ["/scripts/launch.sh"]

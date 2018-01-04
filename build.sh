@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t dclong/jupyterlab .
+docker build -t jupyterlab .
