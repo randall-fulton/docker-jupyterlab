@@ -13,6 +13,7 @@ RUN mkdir -p /usr/share/man/man7 \
         apt-transport-https \
         build-essential \
         curl \
+        git \
         libssl-dev \
         libffi-dev \
         postgresql-client \
@@ -45,8 +46,13 @@ COPY scripts /scripts
 COPY settings /settings
 # ADD jupyter_notebook_config.py /root/.jupyter/
 
-# Jupyter extensions
-RUN mkdir -p $(jupyter --data-dir)/nbextentions
+# Enable Jupyter extensions
+RUN jupyter nbextensions_configurator enable --user \
+    && mkdir -p $(jupyter --data-dir)/nbextensions \
+# Install Jupyter extensions
+RUN cd $(jupyter --data-dir)/nbextensions \
+    && git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding \
+    && chmod -R go-w vim_binding
 
 VOLUME /src
 
