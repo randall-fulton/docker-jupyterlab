@@ -30,6 +30,7 @@ RUN pip3 install \
         jupyterlab nbdime \
         ipywidgets jupyterlab-widgets \
         qgrid \
+        jupyter_contrib_nbextensions \
     && pip3 install -r requirements.txt \
         # plotly jupyterlab_plotly \
     # && jupyter labextension install --sys-prefix --py --symlink jupyterlab_plotly \
@@ -43,6 +44,9 @@ RUN mkdir /jupyter && chmod 777 /jupyter
 COPY scripts /scripts
 COPY settings /settings
 # ADD jupyter_notebook_config.py /root/.jupyter/
+
+# Jupyter extensions
+RUN mkdir -p $(jupyter --data-dir)/nbextentions
 
 VOLUME /src
 
