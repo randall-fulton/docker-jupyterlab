@@ -28,7 +28,8 @@ RUN pip3 install \
     && jupyter serverextension enable --sys-prefix --py jupyterlab \
     && jupyter nbextension enable --py --sys-prefix widgetsnbextension  
 
-RUN mkdir /jupyter && chmod 777 /jupyter
+RUN mkdir /notebooks /jupyter-init.d \
+    && chmod 777 /notebooks
 COPY scripts /scripts
 COPY settings /settings
 
