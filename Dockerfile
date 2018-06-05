@@ -1,9 +1,9 @@
-FROM python:3.6-stretch
+FROM python:3.6.5-slim-jessie
+LABEL maintainer="rfulton@shipt.com"
 
 RUN mkdir -p /usr/share/man/man7 \
     && mkdir -p /usr/share/postgresql/9.4/man/man1 \
     && mkdir -p /usr/share/man/man1 \
-    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         nodejs npm \
@@ -14,7 +14,9 @@ RUN mkdir -p /usr/share/man/man7 \
         libssl-dev \
         libffi-dev \
         openssh-server \
-        openssh-client
+        openssh-client \
+        less \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash -
 
 RUN npm install -g n \
     && n 9.2.1 \
